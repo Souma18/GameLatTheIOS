@@ -4,14 +4,14 @@ import Foundation
 struct GameStartResponse: Codable {
     let username: String
     let level: Int
-    let matrix: [Int]
+    let matrix: [[Int]]
     let gridSize: Int
 }
 
 struct LevelUpResponse: Codable {
     let username: String
     let newLevel: Int
-    let matrix: [Int]
+    let matrix: [[Int]]
     let gridSize: Int
 }
 
@@ -53,6 +53,8 @@ class GameAPI {
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("application/json", forHTTPHeaderField: "Accept")
+        request.setValue("gzip, deflate", forHTTPHeaderField: "Accept-Encoding")
         
         do {
             request.httpBody = try JSONSerialization.data(withJSONObject: body)
@@ -77,9 +79,9 @@ class GameAPI {
             
             // Trong trường hợp lỗi, trả về dữ liệu mặc định để không crash game
             if T.self == GameStartResponse.self {
-                return GameStartResponse(username: username, level: 1, matrix: [1, 2, 1, 2], gridSize: 2) as! T
+                return GameStartResponse(username: username, level: 1, matrix: [[1, 2], [1, 2]], gridSize: 2) as! T
             } else if T.self == LevelUpResponse.self {
-                return LevelUpResponse(username: username, newLevel: 1, matrix: [1, 2, 1, 2], gridSize: 2) as! T
+                return LevelUpResponse(username: username, newLevel: 1, matrix: [[1, 2], [1, 2]], gridSize: 2) as! T
             } else {
                 fatalError("Không thể xử lý kiểu dữ liệu trả về")
             }

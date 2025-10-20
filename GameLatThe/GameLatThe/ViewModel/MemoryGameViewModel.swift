@@ -39,8 +39,9 @@ class MemoryGameViewModel: ObservableObject {
     }
     
     // Load level từ API response
-    private func loadLevelFromResponse(level: Int, matrix: [Int], gridSize: Int) {
-        self.cards = matrix.map { Card(contentId: $0) }
+    private func loadLevelFromResponse(level: Int, matrix: [[Int]], gridSize: Int) {
+        let flattentMatrix = Array(matrix.joined())
+        self.cards = flattentMatrix.map { Card(contentId: $0) }
         self.gridSize = gridSize
         self.currentLevel = level
         self.isGameOver = false
