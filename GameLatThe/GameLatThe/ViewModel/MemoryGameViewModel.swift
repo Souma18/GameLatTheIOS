@@ -15,7 +15,7 @@ class MemoryGameViewModel: ObservableObject {
     private var firstChosenIndex: Int? = nil
     private var timer: AnyCancellable?
     private var isProcessingMove = false
-    private let mockAPI = MockGameAPI.shared
+    private let mockAPI = GameAPI.shared
     private let iconStorage = FruitIconsStorage.shared
     
     init() {
